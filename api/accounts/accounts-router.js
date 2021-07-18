@@ -11,13 +11,13 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/:id', midware.checkAccountId, (req, res, next) => {
-  // DO YOUR MAGIC
+router.get('/:id', midware.checkAccountId, async (req, res, next) => {
   try {
-
+    const account = await Account.getById(req.params.id)
+    res.json(account)
   } catch (err) {
       next(err)
-  } 
+  }
 });
 
 router.post(
