@@ -24,10 +24,10 @@ router.post(
   '/',
   midware.checkAccountPayload,
   midware.checkAccountNameUnique,
-  (req, res, next) => {
-  // DO YOUR MAGIC
+  async (req, res, next) => {
   try {
-
+    const newAccount = await Account.create(req.body)
+    res.status(201).json(newAccount)
   } catch (err) {
       next(err)
   } 
@@ -47,10 +47,10 @@ router.put(
   } 
 });
 
-router.delete('/:id', midware.checkAccountId, (req, res, next) => {
-  // DO YOUR MAGIC
+router.delete('/:id', midware.checkAccountId, async (req, res, next) => {
   try {
-
+    await Account.deleteById(req.params.id)
+    res.json(req.account)
   } catch (err) {
       next(err)
   } 
